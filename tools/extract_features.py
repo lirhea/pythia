@@ -245,7 +245,9 @@ def main(args):
     for i, im_name_ in enumerate(im_list):
         im_name = im_name_[:-1]
         im_base_name = os.path.basename(im_name)
-        print(im_base_name)
+        if not str.endswith(im_base_name, args.image_ext):
+            print(im_base_name)
+            continue
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
         if image_id % args.total_group == args.group_id:
             bbox = image_bboxes[image_id] if image_id in image_bboxes else None

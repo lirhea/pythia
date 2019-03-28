@@ -211,7 +211,7 @@ def extract_bboxes(bottom_up_csv_file):
 
 def checkfile(dir, catalog):
     startpoint = 0
-    for idx, i in enumerate(catelog):
+    for idx, i in enumerate(catalog):
         if not os.path.exists(os.path.join(dir, i[:-1])):
             startpoint = idx - 1
     return startpoint if startpoint >= 0 else 0

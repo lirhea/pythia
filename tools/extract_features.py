@@ -223,7 +223,7 @@ def main(args):
         im_list = glob.iglob(args.im_or_folder + '/*.' + args.image_ext)
     else:
         im_list = [args.im_or_folder]
-
+    print(len(im_list))
     # extract bboxes from bottom-up attention model
     image_bboxes={}
     if args.bbox_file is not None:

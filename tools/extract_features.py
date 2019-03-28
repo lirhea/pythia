@@ -209,6 +209,12 @@ def extract_bboxes(bottom_up_csv_file):
             image_bboxes[image_id] = bbox
     return image_bboxes
 
+def checkfile(dir, catalog):
+    startpoint = 0
+    for idx, i in enumerate(catelog):
+        if not os.path.exists(os.path.join(dir, i[:-1])):
+            startpoint = idx - 1
+    return startpoint if startpoint >= 0 else 0
 
 def main(args):
     logger = logging.getLogger(__name__)
@@ -218,13 +224,16 @@ def main(args):
     assert_and_infer_cfg(cache_urls=False)
     model = model_engine.initialize_model_from_cfg(args.weights)
     start = timeit.default_timer()
-
-    if os.path.isdir(args.im_or_folder):
-        im_list = glob.iglob(args.im_or_folder + '/*.' + args.image_ext)
-    else:
-        im_list = [args.im_or_folder]
-    print(len(im_list))
+    # print(args.im_or_folder)
+    # if os.path.isdir(args.im_or_folder):
+    #     print('1')
+    #     im_list = glob.iglob(args.im_or_folder + '/*.' + args.image_ext)
+    # else:
+    #     im_list = [args.im_or_folder]
+    # print(len(im_list))
     # extract bboxes from bottom-up attention model
+    catalog = open(os.path.join(args.output_dir, 'test2015.txt')).readlines()
+    im_list = catalog[checkfile(args.output_dir, catalog):]
     image_bboxes={}
     if args.bbox_file is not None:
         image_bboxes = extract_bboxes(args.bbox_file)
@@ -233,7 +242,8 @@ def main(args):
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
-    for i, im_name in enumerate(im_list):
+    for i, im_name_ in enumerate(im_list):
+        im_name = im_name_[:-1]
         im_base_name = os.path.basename(im_name)
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
         if image_id % args.total_group == args.group_id:

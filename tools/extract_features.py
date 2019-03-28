@@ -232,7 +232,7 @@ def main(args):
     #     im_list = [args.im_or_folder]
     # print(len(im_list))
     # extract bboxes from bottom-up attention model
-    catalog = open(os.path.join(args.output_dir, 'test2015.txt')).readlines()
+    catalog = open(os.path.join(args.im_or_folder, 'test2015.txt')).readlines()
     im_list = catalog[checkfile(args.output_dir, catalog):]
     image_bboxes={}
     if args.bbox_file is not None:

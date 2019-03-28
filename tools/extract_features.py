@@ -214,6 +214,7 @@ def checkfile(dir, catalog):
     for idx, i in enumerate(catalog):
         if not os.path.exists(os.path.join(dir, i[:-1])):
             startpoint = idx - 1
+            break
     return startpoint if startpoint >= 0 else 0
 
 def main(args):

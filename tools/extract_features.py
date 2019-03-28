@@ -250,12 +250,12 @@ def main(args):
         if not str.endswith(im_base_name, args.image_ext):
             print("ERROR FILE:", im_base_name)
             continue
-        print(im_base_name)
+        # print(im_base_name)
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
-        print(image_id)
+        print(image_id % args.total_group)
         if image_id % args.total_group == args.group_id:
             bbox = image_bboxes[image_id] if image_id in image_bboxes else None
-            im = cv2.imread(im_name)
+            im = cv2.imread(os.path.join(args.im_or_folder, im_name))
             if im is not None:
                 outfile = os.path.join(args.output_dir, 
                                     im_base_name.replace('jpg', 'npy'))
@@ -276,9 +276,10 @@ def main(args):
                 np.save(outfile, result)
                 np.save(boxfile, bbox100)
                 os.rmdir(lock_folder)
-
+            else:
+                print("ERROR name:", im_name)
             count += 1
-
+            
             if count % 100 == 0:
                 end = timeit.default_timer()
                 epoch_time = end - start

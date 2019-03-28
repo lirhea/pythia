@@ -250,7 +250,9 @@ def main(args):
         if not str.endswith(im_base_name, args.image_ext):
             print("ERROR FILE:", im_base_name)
             continue
+        print(im_base_name)
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
+        print(image_id)
         if image_id % args.total_group == args.group_id:
             bbox = image_bboxes[image_id] if image_id in image_bboxes else None
             im = cv2.imread(im_name)

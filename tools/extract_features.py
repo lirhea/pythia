@@ -234,6 +234,7 @@ def main(args):
     # extract bboxes from bottom-up attention model
     catalog = open(os.path.join(args.im_or_folder, 'test2015.txt')).readlines()
     im_list = catalog[checkfile(args.output_dir, catalog):]
+    print('im_list', len(im_list))
     image_bboxes={}
     if args.bbox_file is not None:
         image_bboxes = extract_bboxes(args.bbox_file)
@@ -246,7 +247,7 @@ def main(args):
         im_name = im_name_[:-1]
         im_base_name = os.path.basename(im_name)
         if not str.endswith(im_base_name, args.image_ext):
-            print(im_base_name)
+            print("ERROR FILE:", im_base_name)
             continue
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
         if image_id % args.total_group == args.group_id:

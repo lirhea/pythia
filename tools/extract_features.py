@@ -252,7 +252,7 @@ def main(args):
             continue
         # print(im_base_name)
         image_id = int(im_base_name.split(".")[0].split("_")[-1])   # for COCO
-        print(image_id % args.total_group)
+        # print(image_id % args.total_group)
         if image_id % args.total_group == args.group_id:
             bbox = image_bboxes[image_id] if image_id in image_bboxes else None
             im = cv2.imread(os.path.join(args.im_or_folder, im_name))
